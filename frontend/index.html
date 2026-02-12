@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instacart Intelligence | Availability & Subs</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/lib/index.min.js"></script>
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🥕</span>
+                <span class="logo-text">Instacart <span class="accent">Intelligence</span></span>
+            </div>
+            <div class="nav-meta">
+                <span class="tag">Inventory Logic</span>
+                <span class="tag tech-stack">ML Availability Scorer</span>
+                <button id="aboutBtn" class="about-btn">About Research</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Info Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content glass">
+            <span class="close">&times;</span>
+            <h2>Fulfillment Intelligence Research</h2>
+            <div class="modal-body">
+                <section>
+                    <h4>The Real-World Problem</h4>
+                    <p>Grocery retailers rarely provide real-time shelf inventory APIs. This creates a "black box" where
+                        Instacart doesn't know if an item is truly in stock until a shopper reaches the aisle.</p>
+                </section>
+                <section>
+                    <h4>Methodology: Availability Scorer</h4>
+                    <p>We solve this by treating Shopper Found/Not Found logs as a real-time data stream. Using a
+                        decay-weighted average, we calculate the <strong>Availability Probability Score</strong>. If
+                        multiple shoppers fail to find an item within a short window, the model flags it as Out-Of-Stock
+                        (OOS) for future customers.</p>
+                </section>
+                <section>
+                    <h4>Methodology: Bayesian Substitution</h4>
+                    <p>When an item is OOS, our ranking engine suggests replacements by calculating the joint
+                        probability of <em>Category Fit</em> and <em>Substitute Availability</em>. This prevents "bad
+                        trades" that lead to customer refunds.</p>
+                </section>
+                <div class="research-cite">
+                    <p>Ref: Inspired by <strong>Dr. Muhammad Iftekher Chowdhury's</strong> (Instacart Engineering
+                        Manager) research on TCN-Transformer forecasting and retail marketplace dynamics (IEEE CASCON
+                        2025).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="dashboard">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Fulfillment Intelligence</h1>
+                <p class="subtitle">Solving Real-Time Store Inventory Variance</p>
+            </div>
+            <div class="research-badge">
+                <span class="badge-label">Inspired by</span>
+                <span class="badge-value">IEEE CASCON 2025 Research</span>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span class="stat-title">Network Found Rate</span>
+                    <i data-lucide="check-circle" class="stat-icon"></i>
+                </div>
+                <div class="stat-value">85.2%</div>
+                <div class="stat-trend negative">-2.1% (Evening Spike)</div>
+            </div>
+            <div class="stat-card glass highlighted">
+                <div class="stat-header">
+                    <span class="stat-title">OOS Prediction Score</span>
+                    <i data-lucide="alert-triangle" class="stat-icon"></i>
+                </div>
+                <div class="stat-value">0.92</div>
+                <div class="stat-trend">High Confidence</div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span class="stat-title">Sub. Acceptance Rate</span>
+                    <i data-lucide="refresh-cw" class="stat-icon"></i>
+                </div>
+                <div class="stat-value">91.8%</div>
+                <div class="stat-trend positive">+5.4% Optimized</div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span class="stat-title">Lost Sales Mitigation</span>
+                    <i data-lucide="trending-up" class="stat-icon"></i>
+                </div>
+                <div class="stat-value">$14.2k</div>
+                <div class="stat-trend positive">Saved via Subs</div>
+            </div>
+        </section>
+
+        <section class="content-grid">
+            <div class="chart-container glass main-chart">
+                <div class="chart-header">
+                    <h3>Inventory Reliability Spike (48h Trend)</h3>
+                    <div class="chart-legend">
+                        <span class="legend-item"><span class="dot requests"></span> Predicted Availability</span>
+                        <span class="legend-item"><span class="dot orders"></span> Actual Shops</span>
+                    </div>
+                </div>
+                <canvas id="dynamicsChart"></canvas>
+            </div>
+
+            <div class="chart-container glass forecast-chart">
+                <div class="chart-header">
+                    <h3>🔮 Smart Substitution Confidence</h3>
+                    <p class="methodology">Methodology: Bayesian Ranking</p>
+                </div>
+                <div class="forecast-content">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+                <div class="forecast-insight">
+                    <p>Current top-performing sub: <strong>Organic Baby Spinach</strong> for Kale.
+                        Confidence: <strong>96%</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="methodology-banner glass">
+            <div class="methodology-icon">💡</div>
+            <div class="methodology-text">
+                <h4>Technical Spotlight: Real-Time Availability Scorer</h4>
+                <p>This system uses a decay-based weighted average of recent shopper 'item found' feedback to predict
+                    store-shelf stock levels without requiring direct retail API access.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>Built for Instacart ML Showcase | Based on Muhammad Iftekher Chowdhury's Research</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
