@@ -10,12 +10,10 @@ services:
         value: 10000
 
   # Frontend: Static Site
-  - type: web
+  - type: static
     name: instacart-fulfillment-dashboard
-    env: static
+    staticPublishPath: frontend
     routes:
       - type: rewrite
         source: /.*
         destination: /index.html
-    # Root directory for static site
-    publishDir: frontend
