@@ -91,7 +91,7 @@ def rank_substitutions(original_product, score_threshold=0.6):
 st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/9/9f/Instacart_logo.svg", width=180)
 st.sidebar.title("Inventory Intelligence")
 st.sidebar.markdown("---")
-view_mode = st.sidebar.radio("Module", ["Fulfillment Center", "Substitution Lab", "Predictive Alerts"])
+view_mode = st.sidebar.radio("Module", ["Fulfillment Center", "Substitution Lab", "Predictive Alerts", "🖥️ Partner Portal"])
 
 history_df = get_historical_oos_data()
 
@@ -158,8 +158,29 @@ elif view_mode == "Predictive Alerts":
         {"Product": "Greek Yogurt", "Risk": "MODERATE", "Impact": "$400 hourly loss", "Prediction": "Stock low across 5 stores"},
     ])
 
+elif view_mode == "🖥️ Partner Portal":
+    import streamlit.components.v1 as components
+    import os
+    
+    # Load HTML, CSS, and JS
+    frontend_dir = "frontend"
+    with open(os.path.join(frontend_dir, "index.html"), "r") as f:
+        html_content = f.read()
+    with open(os.path.join(frontend_dir, "style.css"), "r") as f:
+        css_content = f.read()
+    with open(os.path.join(frontend_dir, "script.js"), "r") as f:
+        js_content = f.read()
+    
+    # Inject CSS and JS into HTML
+    html_content = html_content.replace('<link rel="stylesheet" href="style.css">', f'<style>{css_content}</style>')
+    html_content = html_content.replace('<script src="script.js"></script>', f'<script>{js_content}</script>')
+    
+    # Render Custom Dashboard
+    components.html(html_content, height=1000, scrolling=True)
+
 # ==========================================
 # FOOTER
 # ==========================================
-st.markdown("---")
-st.markdown("<center>Instacart Data Science | Solving Real-Time Fulfillment Variance</center>", unsafe_allow_html=True)
+if view_mode != "🖥️ Partner Portal":
+    st.markdown("---")
+    st.markdown("<center>Instacart Data Science | Solving Real-Time Fulfillment Variance</center>", unsafe_allow_html=True)
