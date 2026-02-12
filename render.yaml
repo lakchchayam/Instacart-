@@ -1,0 +1,21 @@
+services:
+  # Backend: Streamlit Web Service
+  - type: web
+    name: instacart-fulfillment-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: streamlit run backend/app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: PORT
+        value: 10000
+
+  # Frontend: Static Site
+  - type: static
+    name: instacart-fulfillment-dashboard
+    env: static
+    routes:
+      - type: rewrite
+        source: /.*
+        destination: /index.html
+    # Root directory for static site
+    publishDir: frontend
