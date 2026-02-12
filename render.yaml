@@ -10,7 +10,7 @@ services:
         value: 10000
 
   # Frontend: Static Site
-  - type: static
+  - type: web
     name: instacart-fulfillment-dashboard
     env: static
     routes:
