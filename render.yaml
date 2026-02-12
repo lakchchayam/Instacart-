@@ -9,11 +9,9 @@ services:
       - key: PORT
         value: 10000
 
-  # Frontend: Static Site
-  - type: static
+  # Frontend: Served via Python HTTP Server (Robust alternative to type: static)
+  - type: web
     name: instacart-fulfillment-dashboard
-    staticPublishPath: frontend
-    routes:
-      - type: rewrite
-        source: /.*
-        destination: /index.html
+    env: python
+    buildCommand: "" # No build needed for pure HTML/JS
+    startCommand: python -m http.server $PORT --directory frontend
